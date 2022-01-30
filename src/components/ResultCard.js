@@ -3,11 +3,13 @@ import { GlobalContext } from '../context/GlobalState';
 import Moment from 'react-moment';
 
 export const ResultCard = ({movie}) => {
-  const{addMovieToWatchlist, watchlist} = useContext(GlobalContext);
+  const{addMovieToWatchlist, addMovieToWatched, watchlist, watched} = useContext(GlobalContext);
 
-  let storedMovie = watchlist.find(o => o.id === movie.id);
+  let storedMovie = watchlist.find((o) => o.id === movie.id);
+  let storeMovieWatched = watched.find((o) => o.id === movie.id);
 
-  const watchlistDisabled = storedMovie ? true : false;
+  const watchlistDisabled = storedMovie ? true : storeMovieWatched ? true : false;
+  const watchedDisabled = storeMovieWatched ? true: false;
 
   return (
   <div className='result-card'>
@@ -33,6 +35,11 @@ export const ResultCard = ({movie}) => {
               disabled={watchlistDisabled}
               onClick={()=>addMovieToWatchlist(movie)}
               >Add to Watchlist</button>
+
+            <button className='btn'
+              disabled={watchedDisabled}
+              onClick={()=>addMovieToWatched(movie)}
+              >Add to Watched</button>
           </div>
       </div>
   </div>
